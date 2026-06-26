@@ -1,10 +1,10 @@
 'use client';
 
+import type { NavGroup } from '@/components/dashboard/nav-configs';
+import { Sidebar } from '@/components/dashboard/sidebar';
 import { useAuth, type UserRole } from '@/lib/auth-context';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { Sidebar } from '@/components/dashboard/sidebar';
-import type { NavGroup } from '@/components/dashboard/nav-configs';
 
 interface RoleLayoutProps {
   children: React.ReactNode;
@@ -54,3 +54,5 @@ export function RoleLayout({ children, allowedRoles, navGroups, settingsHref }: 
     </div>
   );
 }
+
+export default RoleLayout;
