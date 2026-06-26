@@ -1,7 +1,7 @@
+import { AuthProvider } from '@/lib/auth-context'
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-import { AuthProvider } from '@/lib/auth-context'
 import './globals.css'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })

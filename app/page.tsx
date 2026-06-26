@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button-glass';
 import { useAuth } from '@/lib/auth-context';
 import { ArrowRight, Award, Camera, CheckCircle2, Users, Zap } from 'lucide-react';
 import Link from 'next/link';
