@@ -13,7 +13,7 @@ interface RoleLayoutProps {
   settingsHref: string;
 }
 
-export function RoleLayout({ children, allowedRoles, navGroups, settingsHref }: RoleLayoutProps) {
+export default function RoleLayout({ children, allowedRoles, navGroups, settingsHref }: RoleLayoutProps) {
   const { user, isLoading, getDashboardPath } = useAuth();
   const router = useRouter();
 
