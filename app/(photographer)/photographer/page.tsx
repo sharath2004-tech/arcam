@@ -1,5 +1,6 @@
 'use client';
 
+import StatCards from '@/components/dashboard/stat-cards';
 import { useAuth } from '@/lib/auth-context';
 import { BarChart3, Calendar, Folders, QrCode, Users } from 'lucide-react';
 import Link from 'next/link';
@@ -22,20 +23,12 @@ export default function PhotographerDashboard() {
         <p className="text-white/50 text-sm mt-1">Welcome back, {user?.name?.split(' ')[0]}. Here&apos;s your overview.</p>
       </div>
 
-      {/* Stats — will populate from API */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {[
-          { label: 'Total Albums', value: '—' },
-          { label: 'Total Customers', value: '—' },
-          { label: 'QR Scans', value: '—' },
-          { label: 'Revenue', value: '—' },
-        ].map(({ label, value }) => (
-          <div key={label} className="glass-effect rounded-2xl p-5">
-            <p className="text-white/40 text-xs mb-2">{label}</p>
-            <p className="text-2xl font-bold text-white">{value}</p>
-          </div>
-        ))}
-      </div>
+      <StatCards items={[
+        { label: 'Total Albums',    key: 'totalAlbums' },
+        { label: 'Total Customers', key: 'totalCustomers' },
+        { label: 'QR Scans',        key: 'qrScans' },
+        { label: 'Events',          key: 'totalEvents' },
+      ]} />
 
       {/* Quick links */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">

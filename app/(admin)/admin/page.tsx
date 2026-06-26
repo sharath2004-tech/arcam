@@ -1,5 +1,6 @@
 'use client';
 
+import StatCards from '@/components/dashboard/stat-cards';
 import { BarChart3, Building2, CreditCard, Folders, ScrollText, Settings, ShieldCheck, Users } from 'lucide-react';
 import Link from 'next/link';
 
@@ -21,14 +22,12 @@ export default function AdminDashboard() {
         <h1 className="text-2xl font-bold text-white">Admin Dashboard</h1>
         <p className="text-white/50 text-sm mt-1">Platform overview and management.</p>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {['Total Users', 'Studios', 'Albums', 'Revenue'].map(label => (
-          <div key={label} className="glass-effect rounded-2xl p-5">
-            <p className="text-white/40 text-xs mb-2">{label}</p>
-            <p className="text-2xl font-bold text-white">—</p>
-          </div>
-        ))}
-      </div>
+      <StatCards items={[
+        { label: 'Total Users', key: 'totalUsers' },
+        { label: 'Studios',     key: 'totalStudios' },
+        { label: 'Albums',      key: 'totalAlbums' },
+        { label: 'QR Scans',    key: 'totalScans' },
+      ]} />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {quickLinks.map(({ label, href, icon: Icon }) => (
           <Link key={href} href={href}

@@ -1,5 +1,6 @@
 'use client';
 
+import StatCards from '@/components/dashboard/stat-cards';
 import { useAuth } from '@/lib/auth-context';
 import { BarChart3, CalendarCheck, Folders, Users } from 'lucide-react';
 import Link from 'next/link';
@@ -19,14 +20,12 @@ export default function StudioDashboard() {
         <h1 className="text-2xl font-bold text-white">Studio Dashboard</h1>
         <p className="text-white/50 text-sm mt-1">Welcome back, {user?.name ?? 'there'}.</p>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {['Albums', 'Team Members', 'Bookings', 'QR Scans'].map(label => (
-          <div key={label} className="glass-effect rounded-2xl p-5">
-            <p className="text-white/40 text-xs mb-2">{label}</p>
-            <p className="text-2xl font-bold text-white">—</p>
-          </div>
-        ))}
-      </div>
+      <StatCards items={[
+        { label: 'Albums',       key: 'totalAlbums' },
+        { label: 'Team Members', key: 'teamMembers' },
+        { label: 'Bookings',     key: 'totalBookings' },
+        { label: 'QR Scans',     key: 'qrScans' },
+      ]} />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {quickLinks.map(({ label, href, icon: Icon }) => (
           <Link key={href} href={href}
