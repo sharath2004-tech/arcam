@@ -36,6 +36,8 @@ app.use(express.json())
 // Routes
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/users', require('./routes/users'))
+app.use('/api/albums', require('./routes/albums'))
+app.use('/api/qr', require('./routes/qr'))
 
 app.get('/health', (_req, res) => {
   res.status(200).json({ ok: true, service: 'arcam-backend' })

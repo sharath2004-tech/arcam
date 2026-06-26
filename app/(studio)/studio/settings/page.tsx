@@ -1,5 +1,6 @@
 'use client';
 
+import { api } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
 import { useState } from 'react';
 
@@ -10,11 +11,17 @@ export default function StudioSettings() {
   const [studioName, setStudioName] = useState('');
   const [saved, setSaved] = useState(false);
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: call PUT /api/auth/me
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    setError('');
+    try {
+      await api.put('/api/auth/me', { name, phone });
+      updateUser({ name, phone });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to save');
+    }
   };
 
   return (

@@ -30,7 +30,7 @@ export interface AuthContextType {
   login: (email: string, password: string) => Promise<User>;
   signup: (email: string, password: string, name: string, role: UserRole, phone?: string) => Promise<{ requiresVerification: boolean }>;
   logout: () => void;
-  verifyOTP: (otp: string) => Promise<void>;
+  verifyOTP: (email: string, otp: string) => Promise<void>;
   resendOTP: () => Promise<void>;
   updateUser: (updates: Partial<User>) => void;
   getDashboardPath: () => string;
@@ -97,7 +97,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   }, []);
 
-  const verifyOTP = useCallback(async (otp: string) => {
+  const verifyOTP = useCallback(async (_email: string, otp: string) => {
     await api.post('/api/auth/verify-otp', { otp });
     setUser(prev => prev ? { ...prev, isVerified: true } : prev);
   }, []);
