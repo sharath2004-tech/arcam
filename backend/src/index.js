@@ -33,6 +33,10 @@ app.use(cors({
 }))
 app.use(express.json())
 
+// Routes
+app.use('/api/auth', require('./routes/auth'))
+app.use('/api/users', require('./routes/users'))
+
 app.get('/health', (_req, res) => {
   res.status(200).json({ ok: true, service: 'arcam-backend' })
 })
@@ -42,16 +46,6 @@ app.get('/api/db-health', async (_req, res) => {
     const db = await connectToDatabase()
     await db.command({ ping: 1 })
     res.status(200).json({ ok: true, database: 'connected' })
-  } catch (error) {
-    res.status(500).json({ ok: false, message: error.message })
-  }
-})
-
-app.get('/api/memories', async (_req, res) => {
-  try {
-    const db = await connectToDatabase()
-    const memories = await db.collection('memories').find({}).limit(20).toArray()
-    res.status(200).json({ ok: true, data: memories })
   } catch (error) {
     res.status(500).json({ ok: false, message: error.message })
   }

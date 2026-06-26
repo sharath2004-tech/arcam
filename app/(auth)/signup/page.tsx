@@ -20,7 +20,7 @@ export default function SignupPage() {
   const roles: { value: UserRole; label: string; icon: React.ReactNode }[] = [
     { value: 'customer', label: 'Customer', icon: <User className="w-4 h-4" /> },
     { value: 'photographer', label: 'Photographer', icon: <Camera className="w-4 h-4" /> },
-    { value: 'studio_owner', label: 'Studio Owner', icon: <Users className="w-4 h-4" /> },
+    { value: 'studio_manager', label: 'Studio Manager', icon: <Users className="w-4 h-4" /> },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
