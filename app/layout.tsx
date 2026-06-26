@@ -1,3 +1,4 @@
+import { CapacitorBackHandler } from '@/components/capacitor-back-handler'
 import { AuthProvider } from '@/lib/auth-context'
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
@@ -52,6 +53,7 @@ export default function RootLayout({
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} bg-background`}>
       <body className="font-sans antialiased bg-background text-foreground">
         <AuthProvider>
+          <CapacitorBackHandler />
           {children}
           {process.env.NODE_ENV === 'production' && <Analytics />}
         </AuthProvider>

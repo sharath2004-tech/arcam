@@ -1,7 +1,7 @@
 'use client';
 
 import { Sidebar } from '@/components/dashboard/sidebar';
-import { AuthProvider, useAuth } from '@/lib/auth-context';
+import { useAuth } from '@/lib/auth-context';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -22,8 +22,12 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen">
       <Sidebar />
-      <main className="flex-1 ml-64 bg-background">
-        <div className="p-8">
+      {/* Desktop: offset for fixed sidebar. Mobile: offset for fixed top bar */}
+      <main className="flex-1 md:ml-64 bg-background">
+        <div
+          className="p-4 md:p-8"
+          style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 4rem)' }}
+        >
           {children}
         </div>
       </main>
@@ -32,9 +36,6 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
 }
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <AuthProvider>
-      <DashboardLayoutContent>{children}</DashboardLayoutContent>
-    </AuthProvider>
-  );
+  return <DashboardLayoutContent>{children}</DashboardLayoutContent>;
 }
+
