@@ -54,5 +54,3 @@ export function RoleLayout({ children, allowedRoles, navGroups, settingsHref }: 
     </div>
   );
 }
-
-export default RoleLayout;

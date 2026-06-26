@@ -1,6 +1,6 @@
 'use client';
 
-import { Users, UserPlus } from 'lucide-react';
+import { UserPlus, Users } from 'lucide-react';
 
 export default function PhotographerCustomers() {
   return (

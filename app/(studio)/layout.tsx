@@ -1,7 +1,7 @@
 'use client';
 
-import RoleLayout from '@/components/dashboard/role-layout';
 import { studioNav } from '@/components/dashboard/nav-configs';
+import RoleLayout from '@/components/dashboard/role-layout';
 
 export default function StudioLayout({ children }: { children: React.ReactNode }) {
   return (

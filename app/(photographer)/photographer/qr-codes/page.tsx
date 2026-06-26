@@ -1,6 +1,6 @@
 'use client';
 
-import { QrCode, Download } from 'lucide-react';
+import { QrCode } from 'lucide-react';
 
 export default function PhotographerQRCodes() {
   return (

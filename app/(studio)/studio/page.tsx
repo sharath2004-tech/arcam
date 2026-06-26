@@ -1,8 +1,8 @@
 'use client';
 
 import { useAuth } from '@/lib/auth-context';
+import { BarChart3, CalendarCheck, Folders, Users } from 'lucide-react';
 import Link from 'next/link';
-import { Users, Folders, CalendarCheck, BarChart3 } from 'lucide-react';
 
 const quickLinks = [
   { label: 'Team', href: '/studio/team', icon: Users },

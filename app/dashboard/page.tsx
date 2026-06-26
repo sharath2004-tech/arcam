@@ -1,9 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
+import { getDashboardPath, useAuth } from '@/lib/auth-context';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/lib/auth-context';
-import { getDashboardPath } from '@/lib/auth-context';
+import { useEffect } from 'react';
 
 export default function DashboardRedirect() {
   const { user, loading } = useAuth();

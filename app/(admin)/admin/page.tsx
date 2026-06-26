@@ -1,7 +1,7 @@
 'use client';
 
+import { BarChart3, Building2, CreditCard, Folders, ScrollText, Settings, ShieldCheck, Users } from 'lucide-react';
 import Link from 'next/link';
-import { Users, Building2, Folders, BarChart3, CreditCard, ShieldCheck, ScrollText, Settings } from 'lucide-react';
 
 const quickLinks = [
   { label: 'Users', href: '/admin/users', icon: Users },
