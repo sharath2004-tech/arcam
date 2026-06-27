@@ -14,8 +14,8 @@ interface SidebarProps {
 }
 
 function NavGroupSection({
-  group, pathname, onNavigate,
-}: { group: NavGroup; pathname: string; onNavigate?: () => void }) {
+  group, pathname, onNavigate, indexOffset = 0,
+}: { group: NavGroup; pathname: string; onNavigate?: () => void; indexOffset?: number }) {
   return (
     <div className="mb-4">
       {group.title && (
@@ -24,7 +24,7 @@ function NavGroupSection({
         </p>
       )}
       <nav className="space-y-0.5">
-        {group.items.map((item) => {
+        {group.items.map((item, idx) => {
           const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
           return (
             <Link
@@ -32,9 +32,10 @@ function NavGroupSection({
               href={item.href}
               onClick={onNavigate}
               className={cn(
-                'flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all text-sm font-medium',
+                'nav-item-animate flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all text-sm font-medium',
                 isActive ? 'bg-primary/15 text-primary' : 'text-white/60 hover:text-white hover:bg-white/8'
               )}
+              style={{ animationDelay: `${(indexOffset + idx) * 50}ms` }}
             >
               {item.icon}
               {item.label}
@@ -75,9 +76,12 @@ export function Sidebar({ navGroups, settingsHref }: SidebarProps) {
       </div>
 
       <div className="flex-1 overflow-y-auto">
-        {navGroups.map((group, i) => (
-          <NavGroupSection key={i} group={group} pathname={pathname} onNavigate={() => setMobileOpen(false)} />
-        ))}
+        {navGroups.map((group, i) => {
+          const offset = navGroups.slice(0, i).reduce((sum, g) => sum + g.items.length, 0);
+          return (
+            <NavGroupSection key={i} group={group} pathname={pathname} onNavigate={() => setMobileOpen(false)} indexOffset={offset} />
+          );
+        })}
       </div>
 
       <div className="border-t border-white/10 pt-4 mt-4 space-y-1">

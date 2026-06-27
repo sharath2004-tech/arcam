@@ -105,6 +105,21 @@
   }
 }
 
+@keyframes nav-item-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.nav-item-animate {
+  animation: nav-item-enter 0.25s ease both;
+}
+
 @layer components {
   .glass-effect {
     @apply backdrop-blur-xl bg-white/5 border border-white/10;
