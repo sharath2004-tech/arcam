@@ -3,7 +3,7 @@ const { requireAuth } = require('../middleware/auth')
 const { requireRole } = require('../middleware/rbac')
 const {
   createAlbum, getAlbumsByOwner, getAlbumsForCustomer,
-  getAlbumById, updateAlbum, addPhotoToAlbum, removePhotoFromAlbum,
+  getAlbumById, updateAlbum, addPhotoToAlbum, addPhotosToAlbum, removePhotoFromAlbum,
   deleteAlbum, incrementViews, sanitizeAlbum,
 } = require('../models/album')
 
@@ -157,6 +157,35 @@ router.post('/:id/customers', requireAuth, requireRole(...CREATOR_ROLES), async 
   } catch (err) {
     console.error('Grant access error:', err)
     return res.status(500).json({ ok: false, message: 'Failed to grant access' })
+  }
+})
+
+// ── POST /api/albums/:id/photos/batch  ───────────────────────────────────────
+// Body: { photos: [{url, videoUrl?, caption?}] }
+// Saves multiple photos (all sharing the same optional videoUrl) in one write.
+router.post('/:id/photos/batch', requireAuth, async (req, res) => {
+  try {
+    const album = await getAlbumById(req.params.id)
+    if (!album || album.deleted) return res.status(404).json({ ok: false, message: 'Album not found' })
+    const isOwner = album.ownerId === req.user.id
+    const isAdmin = ['admin', 'super_admin'].includes(req.user.role)
+    if (!isOwner && !isAdmin) return res.status(403).json({ ok: false, message: 'Access denied' })
+    const { photos } = req.body
+    if (!Array.isArray(photos) || photos.length === 0) {
+      return res.status(400).json({ ok: false, message: 'photos array is required' })
+    }
+    if (photos.some(p => !p.url)) {
+      return res.status(400).json({ ok: false, message: 'Every photo must have a url' })
+    }
+    const saved = await addPhotosToAlbum(req.params.id, photos)
+    // Auto-set cover if album has none
+    if (!album.coverUrl && saved.length > 0) {
+      await updateAlbum(req.params.id, { coverUrl: saved[0].url })
+    }
+    return res.status(201).json({ ok: true, photos: saved })
+  } catch (err) {
+    console.error('Batch add photos error:', err)
+    return res.status(500).json({ ok: false, message: 'Failed to add photos' })
   }
 })
 

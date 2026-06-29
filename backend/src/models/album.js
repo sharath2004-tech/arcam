@@ -82,7 +82,7 @@ async function addPhotoToAlbum(albumId, photo) {
   const photoDoc = {
     url: photo.url,
     caption: photo.caption || '',
-    videoUrl: photo.videoUrl || null,   // linked AR video URL
+    videoUrl: photo.videoUrl || null,
     uploadedAt: new Date(),
   }
   await col.updateOne(
@@ -90,6 +90,28 @@ async function addPhotoToAlbum(albumId, photo) {
     { $push: { photos: photoDoc }, $set: { updatedAt: new Date() } }
   )
   return photoDoc
+}
+
+/**
+ * Add multiple photos to an album in a single write
+ * @param {string} albumId
+ * @param {Array<{url, caption, videoUrl}>} photos
+ */
+async function addPhotosToAlbum(albumId, photos) {
+  const { ObjectId } = require('mongodb')
+  const col = await getAlbumsCollection()
+  const now = new Date()
+  const photoDocs = photos.map(p => ({
+    url: p.url,
+    caption: p.caption || '',
+    videoUrl: p.videoUrl || null,
+    uploadedAt: now,
+  }))
+  await col.updateOne(
+    { _id: new ObjectId(albumId) },
+    { $push: { photos: { $each: photoDocs } }, $set: { updatedAt: now } }
+  )
+  return photoDocs
 }
 
 /**
@@ -158,6 +180,7 @@ module.exports = {
   getAlbumById,
   updateAlbum,
   addPhotoToAlbum,
+  addPhotosToAlbum,
   removePhotoFromAlbum,
   deleteAlbum,
   incrementViews,
