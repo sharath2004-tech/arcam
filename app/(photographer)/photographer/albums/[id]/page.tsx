@@ -3,7 +3,8 @@
 import { api } from '@/lib/api';
 import type { Album, Photo } from '@/lib/types';
 import {
-  ArrowLeft, Film, ImageIcon, Pencil, Play, Plus, Star, Trash2, Upload, X,
+    ArrowLeft, Film, ImageIcon,
+    Play, Plus, Star, Trash2, Upload, X
 } from 'lucide-react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';

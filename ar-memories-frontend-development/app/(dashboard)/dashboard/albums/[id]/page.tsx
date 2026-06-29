@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
-import { useParams } from 'next/navigation';
-import Link from 'next/link';
 import { Button } from '@/components/ui/button-glass';
 import { ArrowLeft, Film, ImageIcon, Play, Plus, Star, Trash2, Upload, X } from 'lucide-react';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import { useState } from 'react';
 
 interface Photo {
   url: string;
