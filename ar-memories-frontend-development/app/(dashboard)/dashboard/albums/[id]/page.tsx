@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import AlbumClient from './album-client';
 
 // Required for Next.js static export — actual id read client-side via useParams.
@@ -8,7 +9,6 @@ export async function generateStaticParams() {
 export default function AlbumDetailPage() {
   return <AlbumClient />;
 }
-import { useState } from 'react';
 
 interface Photo {
   url: string;
