@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button-glass';
-import { Plus, Search, Trash2, Share2, Download } from 'lucide-react';
+import { Plus, Search, Trash2 } from 'lucide-react';
+import Link from 'next/link';
 import { FormField } from '@/components/ui/form-field';
 
 interface Album {
@@ -73,7 +74,7 @@ export default function AlbumsPage() {
       {filteredAlbums.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredAlbums.map((album) => (
-            <div key={album.id} className="card-glass group overflow-hidden hover:shadow-2xl transition-all">
+            <Link key={album.id} href={`/dashboard/albums/${album.id}`} className="card-glass group overflow-hidden hover:shadow-2xl transition-all block">
               {/* Placeholder thumbnail */}
               <div className="h-48 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-4 rounded-lg">
                 <div className="text-4xl opacity-50">📷</div>
@@ -92,19 +93,11 @@ export default function AlbumsPage() {
               </div>
 
               <div className="flex gap-2 pt-4 border-t border-border">
-                <Button variant="ghost" size="sm" className="flex-1 gap-1">
-                  <Share2 className="w-4 h-4" />
-                  Share
-                </Button>
-                <Button variant="ghost" size="sm" className="flex-1 gap-1">
-                  <Download className="w-4 h-4" />
-                  Export
-                </Button>
-                <Button variant="ghost" size="sm" className="gap-1">
-                  <Trash2 className="w-4 h-4 text-destructive" />
+                <Button variant="ghost" size="sm" className="flex-1 gap-1" onClick={e => { e.preventDefault(); setAlbums(prev => prev.filter(a => a.id !== album.id)); }}>
+                  <Trash2 className="w-4 h-4 text-destructive" />Delete
                 </Button>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       ) : (

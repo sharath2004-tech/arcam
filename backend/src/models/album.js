@@ -79,7 +79,12 @@ async function updateAlbum(albumId, updates) {
 async function addPhotoToAlbum(albumId, photo) {
   const { ObjectId } = require('mongodb')
   const col = await getAlbumsCollection()
-  const photoDoc = { url: photo.url, caption: photo.caption || '', uploadedAt: new Date() }
+  const photoDoc = {
+    url: photo.url,
+    caption: photo.caption || '',
+    videoUrl: photo.videoUrl || null,   // linked AR video URL
+    uploadedAt: new Date(),
+  }
   await col.updateOne(
     { _id: new ObjectId(albumId) },
     { $push: { photos: photoDoc }, $set: { updatedAt: new Date() } }

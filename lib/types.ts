@@ -1,6 +1,7 @@
 export interface Photo {
   url: string;
   caption: string;
+  videoUrl: string | null;  // linked AR video
   uploadedAt: string;
 }
 

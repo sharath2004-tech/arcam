@@ -3,6 +3,7 @@
 import { api } from '@/lib/api';
 import type { Album } from '@/lib/types';
 import { Folders, Globe, Lock, Plus, Trash2, X } from 'lucide-react';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function PhotographerAlbums() {
@@ -109,7 +110,7 @@ export default function PhotographerAlbums() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {albums.map(album => (
-            <div key={album.id} className="glass-effect rounded-2xl overflow-hidden group">
+            <Link key={album.id} href={`/photographer/albums/${album.id}`} className="glass-effect rounded-2xl overflow-hidden group block">
               <div className="h-36 bg-white/5 flex items-center justify-center">
                 {album.coverUrl
                   ? <img src={album.coverUrl} alt={album.title} className="w-full h-full object-cover" />
@@ -118,7 +119,7 @@ export default function PhotographerAlbums() {
               <div className="p-4 space-y-2">
                 <div className="flex items-start justify-between gap-2">
                   <h3 className="text-white font-semibold text-sm line-clamp-1">{album.title}</h3>
-                  <button onClick={() => handleDelete(album.id)}
+                  <button onClick={e => { e.preventDefault(); handleDelete(album.id); }}
                     className="opacity-0 group-hover:opacity-100 transition-opacity text-red-400 hover:text-red-300 shrink-0">
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -131,7 +132,7 @@ export default function PhotographerAlbums() {
                   <span>{album.totalViews} views</span>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

@@ -3,6 +3,7 @@
 import { api } from '@/lib/api';
 import type { Album } from '@/lib/types';
 import { Folders, Search } from 'lucide-react';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function CustomerAlbums() {
@@ -48,7 +49,7 @@ export default function CustomerAlbums() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.map(album => (
-            <div key={album.id} className="glass-effect rounded-2xl overflow-hidden cursor-pointer hover:bg-white/5 transition-colors">
+            <Link key={album.id} href={`/customer/albums/${album.id}`} className="glass-effect rounded-2xl overflow-hidden hover:bg-white/5 transition-colors block">
               <div className="h-36 bg-white/5 flex items-center justify-center">
                 {album.coverUrl
                   ? <img src={album.coverUrl} alt={album.title} className="w-full h-full object-cover" />
@@ -58,7 +59,7 @@ export default function CustomerAlbums() {
                 <h3 className="text-white font-semibold text-sm">{album.title}</h3>
                 <p className="text-white/40 text-xs mt-1">{album.photoCount} photo{album.photoCount !== 1 ? 's' : ''}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

@@ -4,6 +4,10 @@ const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'arcam'
 const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret_change_in_production'
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d'
 
+const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME || ''
+const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY || ''
+const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET || ''
+
 if (!MONGODB_URI) {
   throw new Error('Missing MongoDB Atlas URI. Set MONGODB_URI (or MONGO_URI) in backend/.env.')
 }
@@ -21,4 +25,7 @@ module.exports = {
   MONGODB_DB_NAME,
   JWT_SECRET,
   JWT_EXPIRES_IN,
+  CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET,
 }

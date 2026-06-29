@@ -110,9 +110,9 @@ router.post('/:id/photos', requireAuth, async (req, res) => {
     const isOwner = album.ownerId === req.user.id
     const isAdmin = ['admin', 'super_admin'].includes(req.user.role)
     if (!isOwner && !isAdmin) return res.status(403).json({ ok: false, message: 'Access denied' })
-    const { url, caption } = req.body
+    const { url, caption, videoUrl } = req.body
     if (!url) return res.status(400).json({ ok: false, message: 'Photo URL is required' })
-    const photo = await addPhotoToAlbum(req.params.id, { url, caption })
+    const photo = await addPhotoToAlbum(req.params.id, { url, caption, videoUrl: videoUrl || null })
     return res.status(201).json({ ok: true, photo })
   } catch (err) {
     console.error('Add photo error:', err)

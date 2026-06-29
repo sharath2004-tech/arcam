@@ -44,6 +44,7 @@ app.use('/api/plans', require('./routes/plans'))
 app.use('/api/notifications', require('./routes/notifications'))
 app.use('/api/analytics', require('./routes/analytics'))
 app.use('/api/customers', require('./routes/customers'))
+app.use('/api/upload', require('./routes/upload'))
 
 app.get('/health', (_req, res) => {
   res.status(200).json({ ok: true, service: 'arcam-backend' })
