@@ -1,13 +1,9 @@
-import AlbumClient from './album-client';
+'use client';
 
-// Required for Next.js static export — actual id read client-side via useParams.
-export async function generateStaticParams() {
-  return [{ id: '_' }];
-}
-
-export default function AlbumDetailPage() {
-  return <AlbumClient />;
-}
+import { Button } from '@/components/ui/button-glass';
+import { ArrowLeft, Film, ImageIcon, Play, Plus, Star, Trash2, Upload, X } from 'lucide-react';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { useState } from 'react';
 
 interface Photo {
