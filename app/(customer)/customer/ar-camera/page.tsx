@@ -1,13 +1,19 @@
 'use client';
 
 import { Camera, Info, Smartphone } from 'lucide-react';
-import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function CustomerARCamera() {
-  // Detect mobile
-  const isMobileHint = typeof navigator !== 'undefined'
-    ? /android|iphone|ipad|mobile/i.test(navigator.userAgent)
-    : false;
+  // Must be detected client-side — navigator is undefined during static export build
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    setIsMobile(/android|iphone|ipad|mobile/i.test(navigator.userAgent));
+  }, []);
+
+  function launchAR() {
+    // Navigate to standalone AR viewer HTML (bypasses Next.js layout)
+    window.location.href = '/ar-viewer.html';
+  }
 
   return (
     <div className="space-y-6">
@@ -24,10 +30,10 @@ export default function CustomerARCamera() {
         </p>
       </div>
 
-      {isMobileHint ? (
-        <Link
-          href="/ar-viewer"
-          className="glass-effect rounded-2xl p-10 flex flex-col items-center text-center gap-5 hover:bg-white/5 transition-colors"
+      {isMobile ? (
+        <button
+          onClick={launchAR}
+          className="w-full glass-effect rounded-2xl p-10 flex flex-col items-center text-center gap-5 hover:bg-white/5 transition-colors"
         >
           <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
             <Camera className="w-8 h-8 text-primary" />
@@ -44,7 +50,7 @@ export default function CustomerARCamera() {
           >
             Open Camera
           </span>
-        </Link>
+        </button>
       ) : (
         <div className="glass-effect rounded-2xl p-16 flex flex-col items-center text-center gap-4">
           <Smartphone className="w-14 h-14 text-white/20" />

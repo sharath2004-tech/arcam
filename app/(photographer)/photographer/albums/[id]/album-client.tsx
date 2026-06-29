@@ -4,7 +4,7 @@ import { api } from '@/lib/api';
 import type { Album, Photo } from '@/lib/types';
 import { ArrowLeft, Film, ImageIcon, Play, Plus, Star, Trash2, Upload, X } from 'lucide-react';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:5000';
@@ -38,7 +38,6 @@ interface PhotoDraft {
 
 export default function AlbumClient() {
   const { id } = useParams<{ id: string }>();
-  const router = useRouter();
 
   const [album, setAlbum] = useState<Album | null>(null);
   const [loading, setLoading] = useState(true);
@@ -59,11 +58,12 @@ export default function AlbumClient() {
   const videoInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    if (!id || id === '_') { setLoading(false); return; }
     api.get<{ album: Album }>(`/api/albums/${id}`)
       .then(({ album }) => setAlbum(album))
-      .catch(() => router.push('/photographer/albums'))
+      .catch(() => setAlbum(null))
       .finally(() => setLoading(false));
-  }, [id, router]);
+  }, [id]);
 
   function onPhotosChange(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files || []);

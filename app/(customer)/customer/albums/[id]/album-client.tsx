@@ -13,20 +13,49 @@ export default function CustomerAlbumDetail() {
 
   const [album, setAlbum] = useState<Album | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [playingUrl, setPlayingUrl] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
 
   useEffect(() => {
+    // '_' is the static placeholder from generateStaticParams — never fetch it
+    if (!id || id === '_') {
+      setLoading(false);
+      return;
+    }
     api.get<{ album: Album }>(`/api/albums/${id}`)
       .then(({ album }) => setAlbum(album))
-      .catch(() => router.push('/customer/albums'))
+      .catch((err: unknown) => {
+        setError(err instanceof Error ? err.message : 'Could not load album');
+      })
       .finally(() => setLoading(false));
-  }, [id, router]);
+  }, [id]);
 
   if (loading) {
     return (
       <div className="flex justify-center py-32">
         <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-4">
+        <Link href="/customer/albums" className="inline-flex items-center gap-2 text-white/40 hover:text-white text-sm transition-colors">
+          <ArrowLeft className="w-4 h-4" />Back to albums
+        </Link>
+        <div className="glass-effect rounded-2xl p-12 flex flex-col items-center text-center gap-3">
+          <ImageIcon className="w-12 h-12 text-white/20" />
+          <p className="text-white/50 font-semibold">Could not load album</p>
+          <p className="text-white/30 text-sm">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-2 px-4 py-2 rounded-xl text-sm text-white/60 border border-white/10 hover:border-white/20 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
       </div>
     );
   }
