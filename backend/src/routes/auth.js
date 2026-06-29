@@ -26,21 +26,16 @@ router.post('/register', async (req, res) => {
     const passwordHash = await bcrypt.hash(password, 12)
     const user = await createUser({ email, passwordHash, name, phone, role })
 
-    // Generate a 6-digit OTP for email verification
-    const otpCode = Math.floor(100000 + Math.random() * 900000).toString()
-    const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
-    await setOtpCode(user._id.toString(), otpCode, otpExpiresAt)
-
-    // TODO: send OTP via email (add email service)
-    console.log(`[OTP] ${email}: ${otpCode}`) // log for development
+    // OTP email verification is disabled for now — mark verified immediately.
+    await verifyUserEmail(user._id.toString())
 
     const token = signToken({ id: user._id.toString(), email: user.email, role: user.role })
     return res.status(201).json({
       ok: true,
-      message: 'Account created. Please verify your email with the OTP sent.',
+      message: 'Account created successfully.',
       token,
-      user: sanitizeUser(user),
-      requiresVerification: true,
+      user: { ...sanitizeUser(user), isVerified: true },
+      requiresVerification: false,
     })
   } catch (err) {
     console.error('Register error:', err)

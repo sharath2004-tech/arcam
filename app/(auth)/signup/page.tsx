@@ -39,7 +39,7 @@ export default function SignupPage() {
 
     try {
       await signup(email, password, name, role);
-      router.push(`/verify-otp?email=${encodeURIComponent(email)}`);
+      router.push('/dashboard');
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Failed to create account');
     }

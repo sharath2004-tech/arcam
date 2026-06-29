@@ -1,4 +1,4 @@
-const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:5000'
+const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://arcam-wspj.onrender.com'
 const TOKEN_KEY = 'ar_token'
 
 function getToken(): string | null {

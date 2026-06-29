@@ -5,17 +5,17 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function DashboardRedirect() {
-  const { user, loading } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (loading) return;
+    if (isLoading) return;
     if (!user) {
       router.replace('/login');
       return;
     }
     router.replace(getDashboardPath(user.role));
-  }, [user, loading, router]);
+  }, [user, isLoading, router]);
 
   return (
     <div className="min-h-screen flex items-center justify-center">
