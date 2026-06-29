@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "eslint .",
     "android:build": "cross-env NEXT_OUTPUT=export pnpm build && npx cap sync android",
+    "android:install": "\"C:\\Users\\shara\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe\" install -r android/app/build/outputs/apk/debug/app-debug.apk",
+    "android:deploy": "pnpm android:build && pnpm android:install",
     "android:open": "npx cap open android",
     "android:sync": "npx cap sync android"
   },

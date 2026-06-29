@@ -1,14 +1,21 @@
 'use client';
 
+import { Button } from '@/components/ui/button-glass';
+import { useAuth, type UserRole } from '@/lib/auth-context';
+import { cn } from '@/lib/utils';
+import {
+    BarChart3, Camera,
+    CreditCard,
+    FileText,
+    Home, Image,
+    LogOut,
+    MessageSquare,
+    QrCode,
+    Settings,
+    Users
+} from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useAuth, type UserRole } from '@/lib/auth-context';
-import { Button } from '@/components/ui/button-glass';
-import {
-  Home, Image, MessageSquare, Settings, LogOut, CreditCard, Users,
-  BarChart3, Camera, FileText, QrCode, Clock
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 interface NavItem {
   icon: React.ReactNode;
@@ -30,6 +37,7 @@ const navigationItems: NavItem[] = [
   
   // Photographer
   { icon: <FileText className="w-5 h-5" />, label: 'Portfolio', href: '/dashboard/portfolio', roles: ['photographer'] },
+  { icon: <Users className="w-5 h-5" />, label: 'Customers', href: '/dashboard/customers', roles: ['photographer'] },
   
   // Studio Owner
   { icon: <Users className="w-5 h-5" />, label: 'Team', href: '/dashboard/team', roles: ['studio_owner', 'admin'] },

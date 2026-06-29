@@ -5,6 +5,12 @@ export const metadata: Metadata = {
   title: 'AR Memories — View Album',
 };
 
-export default function ScanPage({ params }: { params: { token: string } }) {
-  return <ScanClient token={params.token} />;
+// Required for Next.js static export (output: 'export').
+// A placeholder is needed; the actual token is read client-side via useParams.
+export async function generateStaticParams() {
+  return [{ token: '_' }];
+}
+
+export default function ScanPage() {
+  return <ScanClient />;
 }

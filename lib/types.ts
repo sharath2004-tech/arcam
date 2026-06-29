@@ -21,6 +21,19 @@ export interface Album {
   updatedAt: string;
 }
 
+export interface CustomerAlbumRef {
+  albumId: string;
+  albumTitle: string;
+}
+
+export interface Customer {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string | null;
+  albums: CustomerAlbumRef[];
+}
+
 export interface Event {
   id: string;
   title: string;

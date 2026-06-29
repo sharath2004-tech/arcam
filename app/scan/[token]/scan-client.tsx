@@ -3,11 +3,13 @@
 import type { Album } from '@/lib/types';
 import { Camera, Folders, Image } from 'lucide-react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:5000';
 
-export default function ScanClient({ token }: { token: string }) {
+export default function ScanClient() {
+  const { token } = useParams<{ token: string }>();
   const [album, setAlbum] = useState<Album | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
